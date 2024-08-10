@@ -18,7 +18,7 @@ def binary_search(array,target,start,end):
         return 0
     mid = (start+end)//2
     if array[mid] == target:
-        return count.get(target)
+        return count[target]
     elif array[mid] > target:
         return binary_search(array,target,start,mid-1)
     else:
