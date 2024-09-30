@@ -1,14 +1,18 @@
 import sys
-input=sys.stdin.readline
+input = sys.stdin.readline
 
 n = int(input())
-li=set()
+dict = {}
+
 for _ in range(n):
-    name,inout = map(str,input().rstrip().split())
-    if inout=="enter":
-        li.add(name)
-    elif inout=="leave":
-        li.remove(name)
-li = sorted(li, reverse=True)
-for i in li:
+    name, inout = input().split()
+    dict[name] = inout
+    
+    if inout == "leave":
+        del dict[name]
+
+
+dict = sorted(dict.keys(), reverse=True)
+
+for i in dict:
     print(i)
