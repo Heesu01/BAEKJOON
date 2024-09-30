@@ -4,7 +4,7 @@ input=sys.stdin.readline
 n = int(input())
 li=set()
 for _ in range(n):
-    name,inout = map(str,input().split())
+    name,inout = map(str,input().rstrip().split())
     if inout=="enter":
         li.add(name)
     elif inout=="leave":
