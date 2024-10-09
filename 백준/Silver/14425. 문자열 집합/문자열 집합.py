@@ -1,8 +1,8 @@
 n, m = map(int,input().split())
-s=[]
+s=set()
 cnt=0
 for _ in range(n):
-    s.append(input())
+    s.add(input())
 for _ in range(m):
     word = input()
     if word in s:
