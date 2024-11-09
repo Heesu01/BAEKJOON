@@ -1,31 +1,36 @@
-n,m,v = map(int,input().split())
-graph = [[0]*(n+1) for _ in range(n+1)]
-for _ in range(m):
-    a,b = map(int,input().split())
-    graph[a][b]=graph[b][a]=1
-    
-visited1 = [0] * (n+1)
-visited2 = [0] * (n+1)
+from collections import deque
+N,M,V = map(int,input().split())
+A = [[] for _ in range(N+1)]
 
-def dfs(v):
-    visited1[v]=1
-    print(v, end=' ')
-    for i in range(1,n+1):
-        if graph[v][i] == 1 and visited1[i]==0:
-            dfs(i)
+for _ in range(M):
+    s,e = map(int,input().split())
+    A[s].append(e)
+    A[e].append(s)
+    
+for i in range(N+1):
+    A[i].sort()
+
+def DFS(v):
+    print(v,end=' ')
+    visited[v]=True
+    for i in A[v]:
+        if not visited[i]:
+            DFS(i)
             
-def bfs(v):
-    queue = [v]
-    visited2[v]=1
-    while queue:
-        v=queue.pop(0)
-        print(v, end=" ")
-        for i in range(1,n+1):
-            if visited2[i]==0 and graph[v][i]==1:
-                queue.append(i)
-                visited2[i]=1
-
-dfs(v)
+visited = [False] * (N+1)
+DFS(V)
 print()
-bfs(v)
-    
+
+def BFS(v):
+    queue=deque()
+    queue.append(v)
+    visited[v]=True
+    while queue:
+        now_Node = queue.popleft()
+        print(now_Node, end=" ")
+        for i in A[now_Node]:
+            if not visited[i]:
+                visited[i]=True
+                queue.append(i)
+visited = [False] * (N+1)
+BFS(V)
