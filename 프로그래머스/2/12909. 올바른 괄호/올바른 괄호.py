@@ -1,15 +1,16 @@
 def solution(s):
-    answer = False
-    stack=[]
+    answer = True
+    li=[]
     for i in s:
         if i == "(":
-            stack.append(i)
-        elif i == ")":
-            if len(stack)==0:
+            li.append(i)
+        elif i==")":
+            if len(li)==0:
                 answer=False
-                stack.append(i)
                 break
-            stack.pop()
-    if len(stack)==0:
-        answer=True
+            else:
+                li.pop()
+            
+    if len(li)!=0:
+        answer = False
     return answer
