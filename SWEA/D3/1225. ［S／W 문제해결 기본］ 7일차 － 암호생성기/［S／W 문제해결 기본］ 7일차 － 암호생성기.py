@@ -1,19 +1,14 @@
-for _ in range(1,11):
-    T = int(input())
-    li = list(map(int, input().split()))
-    num = 1
-    while True:
-        if num > 5:
-            num = 1
-
-        first = li.pop(0) - num
-
-        if first <= 0:
-            li.append(0)
-            break
-        else:
-            li.append(first)
-
-        num += 1
-
-    print(f"#{T} ",*li)
+for _ in range(10):
+    n = int(input())
+    li = list(map(int,input().split()))
+    while li[-1]!=0:
+        for i in range(1,6):
+            if li[0]-i < 0:
+                li.append(0)
+                li.pop(0)
+                break
+            li.append(li[0]-i)
+            li.pop(0)
+            if li[-1]==0:
+                break
+    print(f"#{n}", *li)
