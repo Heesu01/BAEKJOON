@@ -1,12 +1,25 @@
-T = int(input())
+import java.util.Scanner;
+import java.io.FileInputStream;
 
-for test_case in range(1, T + 1):
+class Solution
+{
+	public static void main(String args[]) throws Exception
+	{
+		Scanner sc = new Scanner(System.in);
+		int T;
+		T=sc.nextInt();
 
-    num = list(map(int, input().split()))
-    sum = 0
-
-    for i in num:
-        if i % 2 != 0:
-            sum += i
+		for(int test_case = 1; test_case <= T; test_case++)
+		{
+			int sum = 0;
             
-    print(f"#{test_case} {sum}")
+            for ( int i = 0; i<10; i++) {
+				int num =sc.nextInt();
+                if (num % 2 != 0) {
+                    sum += num;
+                }
+			}
+            System.out.println("#" + test_case + " " + sum);
+		}
+    }     
+}
