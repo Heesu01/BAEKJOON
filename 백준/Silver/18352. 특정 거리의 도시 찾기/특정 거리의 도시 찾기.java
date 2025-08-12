@@ -2,50 +2,44 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        int K = Integer.parseInt(st.nextToken());
-        int X = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken()); 
+        int K = Integer.parseInt(st.nextToken()); 
+        int X = Integer.parseInt(st.nextToken()); 
 
-        List<List<Integer>> graph = new ArrayList<>();
-        for (int i = 0; i <= N; i++) graph.add(new ArrayList<>());
+        List<Integer>[] g = new ArrayList[N + 1];
+        for (int i = 1; i <= N; i++) g[i] = new ArrayList<>();
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int A = Integer.parseInt(st.nextToken());
-            int B = Integer.parseInt(st.nextToken());
-            graph.get(A).add(B);
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            g[a].add(b); 
         }
 
         int[] dist = new int[N + 1];
         Arrays.fill(dist, -1);
-        dist[X] = 0;
 
-        Queue<Integer> q = new LinkedList<>();
-        q.add(X);
+        ArrayDeque<Integer> q = new ArrayDeque<>();
+        dist[X] = 0;
+        q.offer(X);
 
         while (!q.isEmpty()) {
-            int current = q.poll();
-            for (int next : graph.get(current)) {
-                if (dist[next] == -1) {
-                    dist[next] = dist[current] + 1;
-                    q.add(next);
-                }
+            int cur = q.poll();
+            for (int nxt : g[cur]) {
+                if (dist[nxt] != -1) continue;
+                dist[nxt] = dist[cur] + 1;
+                q.offer(nxt);
             }
         }
 
-        boolean found = false;
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i <= N; i++) {
-            if (dist[i] == K) {
-                sb.append(i).append('\n');
-                found = true;
-            }
+            if (dist[i] == K) sb.append(i).append('\n');
         }
-
-        System.out.print(found ? sb.toString() : "-1");
+        System.out.print(sb.length() == 0 ? "-1\n" : sb.toString());
     }
 }
