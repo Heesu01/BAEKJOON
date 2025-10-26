@@ -61,7 +61,7 @@ public class Main {
         }
 
         sb.append(total - maxCost).append('\n'); 
-        System.out.print(sb); // 한 번에 출력
+        System.out.print(sb); 
     }
 
     // 부모 찾기
@@ -77,3 +77,4 @@ public class Main {
         if (a != b) parent[b] = a;
     }
 }
+
