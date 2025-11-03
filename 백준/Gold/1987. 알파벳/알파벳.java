@@ -20,7 +20,6 @@ public class Main {
             for (int j = 0; j < C; j++) board[i][j] = line.charAt(j);
         }
 
-        // 시작 칸 사용 표시 후 DFS
         used[board[0][0] - 'A'] = true;
         dfs(0, 0, 1);
 
@@ -43,3 +42,4 @@ public class Main {
         }
     }
 }
+
