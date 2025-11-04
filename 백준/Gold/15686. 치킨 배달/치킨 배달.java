@@ -3,9 +3,10 @@ import java.util.*;
 
 public class Main {
     static int N, M;
-    static List<int[]> houses = new ArrayList<>();
-    static List<int[]> chickens = new ArrayList<>();
-    static int min = Integer.MAX_VALUE;
+    static List<int[]> homes = new ArrayList<>();
+    static List<int[]> shops = new ArrayList<>();
+    static int[] pick;
+    static int answer = Integer.MAX_VALUE;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -15,41 +16,45 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        int[][] city = new int[N][N];
-
-        for (int i = 0; i < N; i++) {
+        for (int r = 0; r < N; r++) {
             st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < N; j++) {
-                city[i][j] = Integer.parseInt(st.nextToken());
-                if (city[i][j] == 1) houses.add(new int[]{i, j});
-                else if (city[i][j] == 2) chickens.add(new int[]{i, j});
+            for (int c = 0; c < N; c++) {
+                int v = Integer.parseInt(st.nextToken());
+                if (v == 1) homes.add(new int[]{r, c});
+                else if (v == 2) shops.add(new int[]{r, c});
             }
         }
 
-        comb(0, 0, new int[M]);
+        pick = new int[M];
+        comb(0, 0); 
 
-        System.out.println(min);
+        System.out.println(answer);
     }
 
-    static void comb(int start, int depth, int[] selected) {
+    static void comb(int depth, int start) {
         if (depth == M) {
-            int distSum = 0;
-            for (int[] house : houses) {
-                int minDist = Integer.MAX_VALUE;
-                for (int idx : selected) {
-                    int[] chick = chickens.get(idx);
-                    int dist = Math.abs(house[0] - chick[0]) + Math.abs(house[1] - chick[1]);
-                    minDist = Math.min(minDist, dist);
-                }
-                distSum += minDist;
-            }
-            min = Math.min(min, distSum);
+            answer = Math.min(answer, cityChickenDistance());
             return;
         }
-
-        for (int i = start; i < chickens.size(); i++) {
-            selected[depth] = i;
-            comb(i + 1, depth + 1, selected);
+        for (int i = start; i < shops.size(); i++) {
+            pick[depth] = i;
+            comb(depth + 1, i + 1);
         }
+    }
+
+    static int cityChickenDistance() {
+        int sum = 0;
+        for (int[] h : homes) {
+            int hr = h[0], hc = h[1];
+            int best = Integer.MAX_VALUE;
+            for (int idx : pick) {
+                int[] s = shops.get(idx);
+                int dist = Math.abs(hr - s[0]) + Math.abs(hc - s[1]);
+                if (dist < best) best = dist;
+            }
+            sum += best;
+            if (sum >= answer) return sum;
+        }
+        return sum;
     }
 }
