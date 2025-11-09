@@ -26,7 +26,7 @@ public class Main {
         Arrays.sort(bags); 
 
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
-        long total = 0L;
+        long total = 0;
         int j = 0; 
 
         for (int cap : bags) {
