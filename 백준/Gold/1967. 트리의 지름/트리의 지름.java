@@ -5,7 +5,7 @@ public class Main {
     static int N;
     static List<int[]>[] tree;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine().trim());
 
@@ -21,12 +21,12 @@ public class Main {
             tree[c].add(new int[]{p, w});
         }
 
-        int[] a = farthestBFS(1);    
-        int[] b = farthestBFS(a[0]);  
+        int[] a = BFS(1);    
+        int[] b = BFS(a[0]);  
         System.out.println(b[1]);
     }
 
-    static int[] farthestBFS(int start) {
+    static int[] BFS(int start) {
         int[] dist = new int[N + 1];
         Arrays.fill(dist, -1);
 
