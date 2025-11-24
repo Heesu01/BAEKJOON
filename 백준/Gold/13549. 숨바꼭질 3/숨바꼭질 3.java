@@ -3,6 +3,7 @@ import java.util.*;
 
 public class Main {
     static final int MAX = 100000;
+    static final int INF = Integer.MAX_VALUE;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -12,33 +13,36 @@ public class Main {
         int K = Integer.parseInt(st.nextToken());
 
         int[] dist = new int[MAX + 1];
-        Arrays.fill(dist, -1); 
-
-        ArrayDeque<Integer> dq = new ArrayDeque<>();
-        dq.add(N);
+        Arrays.fill(dist, INF);
         dist[N] = 0;
 
-        while (!dq.isEmpty()) {
-            int cur = dq.pollFirst();
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
+        pq.offer(new int[]{0, N});
 
-            if (cur == K) break;
+        while (!pq.isEmpty()) {
+            int[] cur = pq.poll();
+            int time = cur[0];
+            int pos = cur[1];
 
-            int next = cur * 2;
-            if (next <= MAX && dist[next] == -1) {
-                dist[next] = dist[cur]; 
-                dq.addFirst(next);        
+            if (time > dist[pos]) continue;
+            if (pos == K) break; 
+
+            int next = pos * 2;
+            if (next <= MAX && dist[next] > time) {
+                dist[next] = time;
+                pq.offer(new int[]{time, next});
             }
 
-            next = cur - 1;
-            if (next >= 0 && dist[next] == -1) {
-                dist[next] = dist[cur] + 1;
-                dq.addLast(next);       
+            next = pos - 1;
+            if (next >= 0 && dist[next] > time + 1) {
+                dist[next] = time + 1;
+                pq.offer(new int[]{time + 1, next});
             }
 
-            next = cur + 1;
-            if (next <= MAX && dist[next] == -1) {
-                dist[next] = dist[cur] + 1;
-                dq.addLast(next);
+            next = pos + 1;
+            if (next <= MAX && dist[next] > time + 1) {
+                dist[next] = time + 1;
+                pq.offer(new int[]{time + 1, next});
             }
         }
 
