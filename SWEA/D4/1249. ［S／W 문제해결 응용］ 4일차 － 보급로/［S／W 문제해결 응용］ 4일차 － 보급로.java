@@ -8,7 +8,7 @@ public class Solution {
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
@@ -19,6 +19,7 @@ public class Solution {
             map = new int[N][N];
             dist = new int[N][N];
 
+            // 지도 입력 + 거리 배열 초기화
             for (int i = 0; i < N; i++) {
                 String line = br.readLine().trim();
                 for (int j = 0; j < N; j++) {
@@ -38,7 +39,7 @@ public class Solution {
     static void dijkstra() {
         PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);
 
-        dist[0][0] = map[0][0]; 
+        dist[0][0] = map[0][0]; // 시작점 비용 포함
         pq.add(new int[]{0, 0, dist[0][0]});
 
         while (!pq.isEmpty()) {
@@ -55,13 +56,11 @@ public class Solution {
 
                 if (nx < 0 || ny < 0 || nx >= N || ny >= N) continue;
 
-                if (dist[x][y] != Integer.MAX_VALUE) {
-                    int newCost = dist[x][y] + map[nx][ny];
+                int newCost = dist[x][y] + map[nx][ny];
 
-                    if (newCost < dist[nx][ny]) {
-                        dist[nx][ny] = newCost;
-                        pq.add(new int[]{nx, ny, newCost});
-                    }
+                if (newCost < dist[nx][ny]) {
+                    dist[nx][ny] = newCost;
+                    pq.add(new int[]{nx, ny, newCost});
                 }
             }
         }
