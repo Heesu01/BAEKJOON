@@ -1,45 +1,34 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-
-public class Solution{
-
-	public static void main(String[] args) throws Exception {
+public class Solution {
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
-		StringBuilder sb = new StringBuilder();
+
 		int T = Integer.parseInt(br.readLine());
-		
-		for (int tc=1; tc<T+1; tc++) {
-			
+		StringBuilder sb = new StringBuilder();
+		for (int t = 1; t <= T; t++) {
 			st = new StringTokenizer(br.readLine());
 			int N = Integer.parseInt(st.nextToken());
 			int K = Integer.parseInt(st.nextToken());
-			
-			int[] V = new int[N+1];
-			int[] C = new int[N+1];
-			
-			for(int i=1;i<=N;i++) {
+
+			int[] dp = new int[K + 1];
+			for (int i = 0; i < N; i++) {
 				st = new StringTokenizer(br.readLine());
-				V[i]= Integer.parseInt(st.nextToken());
-				C[i]= Integer.parseInt(st.nextToken());
-			}
-			
-			int[][] dp = new int[N+1][K+1];
-			
-			for (int i=1;i<=N;i++) {
-				for (int w=1;w<=K;w++) {
-					dp[i][w]= dp[i-1][w];
-					if(w>=V[i]) {
-						dp[i][w] = Math.max(dp[i][w], dp[i-1][w-V[i]]+C[i]);
-					}	
+				int v = Integer.parseInt(st.nextToken());
+				int c = Integer.parseInt(st.nextToken());
+
+				for (int j = K; j - v >= 0; j--) {
+					dp[j] = Math.max(dp[j], dp[j - v] + c);
 				}
 			}
 			
-		sb.append("#").append(tc).append(" ").append(dp[N][K]).append('\n');
+			sb.append("#").append(t).append(" ").append(dp[K]).append("\n");
 		}
 		
-		System.out.print(sb);
+		System.out.println(sb);
 	}
-	
 }
