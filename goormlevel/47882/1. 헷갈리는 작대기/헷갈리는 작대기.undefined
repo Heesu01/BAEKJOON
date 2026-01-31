@@ -1,0 +1,18 @@
+import java.io.*;
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String s = br.readLine();
+		int[] li = new int[4];
+		for (char c:s.toCharArray()){
+			if(c=='1') li[0]++;
+			else if(c=='I') li[1]++;
+			else if(c=='l') li[2]++;
+			else if(c=='|') li[3]++;
+		}
+
+		for(int i=0;i<4;i++){
+			System.out.println(li[i]);
+		}
+	}
+}
