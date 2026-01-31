@@ -1,0 +1,18 @@
+import java.io.*;
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String s = br.readLine();
+		int cnt =0;
+
+		for(int i=1;i<s.length();i++){
+			if(s.charAt(i)==' '){
+				if(s.charAt(i-1)!=' '){
+					cnt++;
+				}
+			}
+		}
+		if(s.charAt(s.length()-1)==' ') cnt--;
+		System.out.println(cnt+1);
+	}
+}
