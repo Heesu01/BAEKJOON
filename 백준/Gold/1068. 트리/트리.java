@@ -2,49 +2,55 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static List<Integer>[] tree;
-    static int N, removeNode, ans = 0;
+    static int N, del, root;
+    static List<Integer>[] children;
+    static boolean[] removed;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        N = Integer.parseInt(br.readLine());
-        tree = new ArrayList[N];
-        for (int i = 0; i < N; i++) tree[i] = new ArrayList<>();
+        N = Integer.parseInt(br.readLine().trim());
+        children = new ArrayList[N];
+        for (int i = 0; i < N; i++) children[i] = new ArrayList<>();
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int root = -1;
+        root = -1;
         for (int i = 0; i < N; i++) {
             int p = Integer.parseInt(st.nextToken());
-            if (p == -1) { 
+            if (p == -1) {
                 root = i;
             } else {
-                tree[p].add(i); 
+                children[p].add(i);
             }
         }
 
-        removeNode = Integer.parseInt(br.readLine());
+        del = Integer.parseInt(br.readLine().trim());
+        removed = new boolean[N];
+        removed[del] = true;
 
-        if (removeNode == root) { 
+        if (del == root) {
             System.out.println(0);
-        } else {
-            dfs(root);
-            System.out.println(ans);
+            return;
         }
+
+        int ans = dfs(root);
+        System.out.println(ans);
     }
 
-    static void dfs(int cur) {
-        if (cur == removeNode) return;
+    static int dfs(int node) {
+        if (removed[node]) return 0;
 
-        int childCount = 0;
-        for (int nxt : tree[cur]) {
-            if (nxt == removeNode) continue;
-            dfs(nxt);
-            childCount++;
+        int leafCount = 0;
+        int validChild = 0;
+
+        for (int nxt : children[node]) {
+            if (removed[nxt]) continue;
+            validChild++;
+            leafCount += dfs(nxt);
         }
 
-        if (childCount == 0) { 
-            ans++;
-        }
+        if (validChild == 0) return 1;
+
+        return leafCount;
     }
 }
